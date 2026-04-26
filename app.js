@@ -41,6 +41,68 @@ document.querySelectorAll('.dot-green').forEach((dot) => {
   });
 });
 
+// ─── panel minimise / remove ──────────────────────────────────
+
+const workspace     = document.querySelector('.workspace');
+const editorPanel   = document.querySelector('.editor-panel');
+const consolePanel  = document.querySelector('.console-panel');
+const canvasPanel   = document.querySelector('.canvas-panel');
+const closedList    = document.getElementById('closed-list');
+const sidebarClosed = document.getElementById('sidebar-closed');
+
+function updateWorkspaceLayout() {
+  const editorMin   = editorPanel.classList.contains('panel--minimised');
+  const editorGone  = editorPanel.classList.contains('panel--removed');
+  const consoleMin  = consolePanel.classList.contains('panel--minimised');
+  const consoleGone = consolePanel.classList.contains('panel--removed');
+  const canvasMin   = canvasPanel.classList.contains('panel--minimised');
+  const canvasGone  = canvasPanel.classList.contains('panel--removed');
+
+  const leftEmpty  = editorGone  && consoleGone;
+  const leftStrip  = !leftEmpty  && (editorMin  || editorGone)  && (consoleMin  || consoleGone);
+  const rightEmpty = canvasGone;
+  const rightStrip = !rightEmpty && canvasMin;
+
+  workspace.classList.toggle('workspace--left-empty',     leftEmpty);
+  workspace.classList.toggle('workspace--left-collapsed', !leftEmpty && leftStrip);
+  workspace.classList.toggle('workspace--right-empty',    rightEmpty);
+  workspace.classList.toggle('workspace--right-collapsed', rightStrip && !leftEmpty);
+}
+
+document.querySelectorAll('.dot-amber').forEach((dot) => {
+  dot.addEventListener('click', () => {
+    const panel = dot.closest('.editor-panel, .console-panel, .canvas-panel');
+    if (!panel) return;
+    panel.classList.toggle('panel--minimised');
+    updateWorkspaceLayout();
+  });
+});
+
+document.querySelectorAll('.dot-red').forEach((dot) => {
+  dot.addEventListener('click', () => {
+    const panel = dot.closest('.editor-panel, .console-panel, .canvas-panel');
+    if (!panel) return;
+
+    panel.classList.remove('panel--minimised', 'panel--fullscreen');
+    panel.classList.add('panel--removed');
+
+    const name = panel.querySelector('.panel-title').textContent.trim();
+    const btn  = document.createElement('button');
+    btn.className   = 'restore-btn';
+    btn.textContent = name;
+    btn.addEventListener('click', () => {
+      panel.classList.remove('panel--removed');
+      btn.remove();
+      sidebarClosed.classList.toggle('has-items', closedList.children.length > 0);
+      updateWorkspaceLayout();
+    });
+
+    closedList.appendChild(btn);
+    sidebarClosed.classList.add('has-items');
+    updateWorkspaceLayout();
+  });
+});
+
 // ─── canvas resize ────────────────────────────────────────────
 
 const canvas = document.getElementById('viz-canvas');

@@ -252,6 +252,68 @@ body::after {
   box-shadow: 0 0 6px var(--green);
 }
 
+.sidebar-closed {
+  display: none;
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.sidebar-closed.has-items {
+  display: block;
+}
+
+.closed-list {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 8px;
+  gap: 3px;
+}
+
+.restore-btn {
+  width: 100%;
+  padding: 8px 10px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-muted);
+  font-family: var(--font);
+  font-size: var(--font-sz);
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.1s;
+  position: relative;
+}
+
+.restore-btn::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2px;
+  height: 70%;
+  background: var(--red);
+  opacity: 0.5;
+}
+
+.restore-btn:hover {
+  color: var(--red);
+  border-color: #3a1a1a;
+  background: rgba(248, 81, 73, 0.06);
+}
+
+.restore-btn:hover::before {
+  opacity: 1;
+  box-shadow: 0 0 6px rgba(248, 81, 73, 0.4);
+}
+
+.restore-btn:focus-visible {
+  outline: none;
+  color: var(--green);
+  border-color: var(--border-mid);
+  background: rgba(57, 211, 83, 0.04);
+}
+
 /* ─── main ────────────────────────────────────────────────── */
 
 .main {
@@ -368,8 +430,8 @@ body::after {
 /* ─── left panel ──────────────────────────────────────────── */
 
 .left-panel {
-  display: grid;
-  grid-template-rows: 1fr var(--console-h);
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
   min-height: 0;
   border-right: 1px solid var(--border);
@@ -421,8 +483,27 @@ body::after {
   border-radius: 50%;
 }
 
-.dot-red    { background: #5a1e1e; }
-.dot-amber  { background: #5a4200; }
+.dot-red    {
+  background: #5a1e1e;
+  cursor: pointer;
+  transition: background 0.1s, box-shadow 0.1s;
+}
+
+.dot-red:hover {
+  background: var(--red);
+  box-shadow: 0 0 6px rgba(248, 81, 73, 0.5);
+}
+.dot-amber  {
+  background: #5a4200;
+  cursor: pointer;
+  transition: background 0.1s, box-shadow 0.1s;
+}
+
+.dot-amber:hover {
+  background: var(--amber);
+  box-shadow: 0 0 6px rgba(227, 179, 65, 0.5);
+}
+
 .dot-green  {
   background: #1e4a1e;
   cursor: pointer;
@@ -437,6 +518,8 @@ body::after {
 /* ─── editor ──────────────────────────────────────────────── */
 
 .editor-panel {
+  flex: 1;
+  min-height: 0;
   border-bottom: 1px solid var(--border);
 }
 
@@ -465,6 +548,8 @@ body::after {
 /* ─── console ─────────────────────────────────────────────── */
 
 .console-panel {
+  flex: 0 0 var(--console-h);
+  min-height: 0;
   background: var(--bg-inset);
 }
 
@@ -619,4 +704,55 @@ body::after {
   position: fixed;
   inset: 0;
   z-index: 500;
+}
+
+/* ─── minimised panel ─────────────────────────────────────────── */
+
+.panel--minimised > *:not(.panel-titlebar) {
+  display: none;
+}
+
+.panel--minimised {
+  flex: 0 0 auto !important;
+}
+
+/* when editor is minimised, console expands to fill the left column */
+.editor-panel.panel--minimised ~ .console-panel:not(.panel--minimised) {
+  flex: 1;
+}
+
+/* ─── removed panel ───────────────────────────────────────────── */
+
+.panel--removed {
+  display: none;
+}
+
+/* ─── workspace column collapse ───────────────────────────────── */
+
+/* both left panels minimised — canvas fills, thin strip remains */
+.workspace--left-collapsed {
+  grid-template-columns: auto 1fr;
+}
+
+/* canvas minimised — left fills, thin strip remains */
+.workspace--right-collapsed {
+  grid-template-columns: 1fr auto;
+}
+
+/* both left panels removed — left column disappears */
+.workspace--left-empty {
+  grid-template-columns: 1fr;
+}
+
+.workspace--left-empty .left-panel {
+  display: none;
+}
+
+/* canvas removed — right column disappears */
+.workspace--right-empty {
+  grid-template-columns: 1fr;
+}
+
+.workspace--right-empty .canvas-panel {
+  display: none;
 }
