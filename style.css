@@ -24,13 +24,13 @@
   --green:        #39d353;
   --green-dim:    #1e6e2a;
   --green-glow:   rgba(57, 211, 83, 0.15);
-  --cyan:         #56d4dd;
-  --amber:        #e3b341;
-  --red:          #f85149;
+  --cyan: Aqua;
+  --amber: #FFC300;
+  --red: #FF7383;
 
   --spacer: 1.5rem;
 
-  --header-h:     48px;
+  --header-h:     65.24px;
   --sidebar-w:    100px;
   --transport-h:  calc(30px + (var(--spacer)));
   --console-h:    190px;
@@ -101,24 +101,12 @@ button {
 
 .logo {
   display: flex;
-  align-items: baseline;
-  gap: 8px;
+  align-items: center;
+  gap: calc(var(--spacer) / 2);
 }
 
-.logo-mark {
-  color: var(--green);
-  font-size: var(--text-xl);
-  line-height: 1;
-  position: relative;
-  top: 1px;
-  text-shadow: 0 0 10px var(--green-glow);
-}
-
-.logo-name {
-  color: #fff;
-  font-size: var(--text-lg);
-  font-weight: bold;
-  letter-spacing: 0.18em;
+.logo-icon {
+  width: 10rem;
 }
 
 .logo-sub {
@@ -126,6 +114,8 @@ button {
   font-size: var(--text-xs);
   letter-spacing: 0.25em;
   text-transform: lowercase;
+  position: relative;
+  top: 4.5px;
 }
 
 .nav {
@@ -137,7 +127,7 @@ button {
 .nav-link {
   display: inline-flex;
   align-items: center;
-  padding: 5px 14px;
+  padding: calc(var(--spacer) / 4) calc(var(--spacer) / 2);
   background: transparent;
   border: 1px solid transparent;
   border-radius: 0;
