@@ -13,17 +13,18 @@
   --bg-panel:     #0a0a0a;
   --bg-inset:     #080808;
 
-  --border:       #163030;
-  --border-mid:   #1e4848;
-  --border-hi:    #2fd6d6;
-
-  --text:         #c5d2d2;
-  --text-dim:     #4e6b6b;
-  --text-muted:   #2d4545;
-
   --green:        #2fd6d6;
-  --green-dim:    #0e6e6e;
-  --green-glow:   rgba(47, 214, 214, 0.15);
+  --green-dim:    rgba(47, 214, 214, 0.75);
+  --green-glow:   rgba(47, 214, 214, 0.5);
+
+  --border:       var(--green-glow);
+  --border-mid:   var(--green-dim);
+  --border-hi:    var(--green);
+
+  
+  --text:         #c5d2d2;
+  --text-dim:     var(--green-dim);
+  --text-muted:   var(--green-glow);
 
   --cyan:         aqua;
   --amber:        #FFC300;
@@ -140,6 +141,7 @@ button {
   cursor: pointer;
   transition: color 0.1s, border-color 0.1s, background 0.1s;
   white-space: nowrap;
+  transform: translateY(2px);
 }
 
 .nav-link:hover {
@@ -183,6 +185,11 @@ button {
   border-bottom: 1px solid var(--border);
   flex-shrink: 0;
   text-align: center;
+}
+
+.sidebar-label span {
+  display: inline-block;
+  transform: translateY(1px);
 }
 
 .preset-list {
@@ -464,6 +471,7 @@ button {
   letter-spacing: 0.25em;
   color: var(--text-dim);
   text-transform: uppercase;
+  transform: translateY(1px);
 }
 
 .panel-hint {
