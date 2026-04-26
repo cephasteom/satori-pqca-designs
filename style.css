@@ -430,8 +430,7 @@ button {
 /* ─── workspace ───────────────────────────────────────────── */
 
 .workspace {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
   overflow: hidden;
   min-height: 0;
 }
@@ -439,11 +438,12 @@ button {
 /* ─── left panel ──────────────────────────────────────────── */
 
 .left-panel {
+  flex: 1 1 50%;
+  min-width: 160px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
   min-height: 0;
-  border-right: 1px solid var(--border);
 }
 
 /* ─── shared panel chrome ─────────────────────────────────── */
@@ -535,7 +535,7 @@ button {
 .editor-area {
   flex: 1;
   width: 100%;
-  padding: 16px 18px;
+  padding: calc(var(--spacer) / 2);
   background: var(--bg);
   border: none;
   outline: none;
@@ -564,7 +564,7 @@ button {
 
 .console-area {
   flex: 1;
-  padding: 10px 16px;
+  padding: calc(var(--spacer) / 2);
   overflow-y: auto;
   overflow-x: hidden;
   font-size: var(--font-sz);
@@ -590,6 +590,8 @@ button {
 /* ─── canvas panel ────────────────────────────────────────── */
 
 .canvas-panel {
+  flex: 1 1 50%;
+  min-width: 160px;
   background: var(--bg-inset);
 }
 
@@ -599,6 +601,54 @@ button {
   height: 100%;
   display: block;
   background: var(--bg-inset);
+}
+
+/* ─── resize handles ─────────────────────────────────────── */
+
+.resize-handle {
+  flex-shrink: 0;
+  background: var(--border);
+  transition: background 0.15s;
+  position: relative;
+  z-index: 10;
+}
+
+.resize-handle:hover,
+.resize-handle.is-dragging {
+  background: var(--border-mid);
+}
+
+.resize-handle.is-dragging {
+  background: var(--green-dim);
+}
+
+.resize-handle--col {
+  width: 4px;
+  cursor: ew-resize;
+}
+
+.resize-handle--row {
+  height: 4px;
+  cursor: ns-resize;
+}
+
+/* hide col handle in any special layout state */
+.workspace--left-collapsed  > .resize-handle--col,
+.workspace--right-collapsed > .resize-handle--col,
+.workspace--left-empty      > .resize-handle--col,
+.workspace--right-empty     > .resize-handle--col {
+  display: none;
+}
+
+/* hide row handle when either adjacent panel is minimised or removed */
+.editor-panel.panel--minimised ~ .resize-handle--row,
+.editor-panel.panel--removed   ~ .resize-handle--row {
+  display: none;
+}
+
+.resize-handle--row:has(+ .console-panel.panel--minimised),
+.resize-handle--row:has(+ .console-panel.panel--removed) {
+  display: none;
 }
 
 /* ─── blink cursor ────────────────────────────────────────── */
@@ -738,30 +788,26 @@ button {
 
 /* ─── workspace column collapse ───────────────────────────────── */
 
-/* both left panels minimised — canvas fills, thin strip remains */
-.workspace--left-collapsed {
-  grid-template-columns: auto 1fr;
+/* both left panels minimised — left collapses to header strip */
+.workspace--left-collapsed .left-panel {
+  flex: 0 0 auto;
+  min-width: 0;
 }
 
-/* canvas minimised — left fills, thin strip remains */
-.workspace--right-collapsed {
-  grid-template-columns: 1fr auto;
+/* canvas minimised — canvas collapses to header strip */
+.workspace--right-collapsed .canvas-panel {
+  flex: 0 0 auto;
+  min-width: 0;
 }
 
-/* both left panels removed — left column disappears */
-.workspace--left-empty {
-  grid-template-columns: 1fr;
-}
-
-.workspace--left-empty .left-panel {
+/* both left panels removed — left column and handle disappear */
+.workspace--left-empty .left-panel,
+.workspace--left-empty .resize-handle--col {
   display: none;
 }
 
-/* canvas removed — right column disappears */
-.workspace--right-empty {
-  grid-template-columns: 1fr;
-}
-
-.workspace--right-empty .canvas-panel {
+/* canvas removed — right column and handle disappear */
+.workspace--right-empty .canvas-panel,
+.workspace--right-empty .resize-handle--col {
   display: none;
 }
