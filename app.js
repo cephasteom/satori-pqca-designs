@@ -69,9 +69,9 @@ function updateWorkspaceLayout() {
   workspace.classList.toggle('workspace--right-empty',     rightEmpty);
   workspace.classList.toggle('workspace--right-collapsed', rightStrip && !leftEmpty);
 
-  // clear inline resize so CSS layout classes can take effect
-  if (leftEmpty  || leftStrip)  leftPanel.style.flex   = '';
-  if (rightEmpty || rightStrip) canvasPanel.style.flex = '';
+  // clear inline resize so CSS layout classes (and full-width expansion) can take effect
+  if (leftEmpty  || leftStrip  || rightEmpty) leftPanel.style.flex   = '';
+  if (rightEmpty || rightStrip || leftEmpty)  canvasPanel.style.flex = '';
 }
 
 document.querySelectorAll('.dot-amber').forEach((dot) => {
