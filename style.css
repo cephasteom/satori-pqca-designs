@@ -28,10 +28,13 @@
   --amber:        #e3b341;
   --red:          #f85149;
 
+  --spacer: 1.5rem;
+
   --header-h:     48px;
   --sidebar-w:    100px;
-  --transport-h:  50px;
+  --transport-h:  calc(30px + (var(--spacer)));
   --console-h:    190px;
+
 
   --font: 'Courier New', 'Lucida Console', monospace;
   --font-sz: 1rem;
@@ -77,13 +80,17 @@ body::after {
   z-index: 9999;
 }
 
+button {
+  border-radius: 2px;
+}
+
 /* ─── header ──────────────────────────────────────────────── */
 
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px;
+  padding: 0 var(--spacer);
   background: var(--bg-panel);
   border-bottom: 1px solid var(--border);
   position: relative;
@@ -176,30 +183,30 @@ body::after {
 }
 
 .sidebar-label {
-  padding: 14px 12px 10px;
+  padding: calc(var(--spacer) / 2);
   font-size: var(--text-xs);
   letter-spacing: 0.2em;
   color: var(--text-muted);
   border-bottom: 1px solid var(--border);
   flex-shrink: 0;
+  text-align: center;
 }
 
 .preset-list {
   display: flex;
   flex-direction: column;
-  padding: 8px 8px;
-  gap: 3px;
-  flex: 1;
+  padding: calc(var(--spacer) / 2);
+  gap: calc(var(--spacer) / 8);
 }
 
 .preset-btn {
   width: 100%;
-  padding: 9px 0;
+  padding: calc(var(--spacer) / 4) 0;
   background: transparent;
   border: 1px solid transparent;
   color: var(--text-muted);
   font-family: var(--font);
-  font-size: var(--font-sz);
+  font-size: var(--text-sm);
   letter-spacing: 0.15em;
   cursor: pointer;
   text-align: center;
@@ -271,15 +278,15 @@ body::after {
 
 .restore-btn {
   width: 100%;
-  padding: 8px 10px;
+  padding: calc(var(--spacer) / 4);
   background: transparent;
   border: 1px solid transparent;
   color: var(--text-muted);
   font-family: var(--font);
-  font-size: var(--font-sz);
+  font-size: var(--text-sm);
   letter-spacing: 0.12em;
   cursor: pointer;
-  text-align: left;
+  text-align: center;
   transition: all 0.1s;
   position: relative;
 }
@@ -329,7 +336,7 @@ body::after {
   display: flex;
   align-items: center;
   gap: 20px;
-  padding: 0 18px;
+  padding: 0 calc(var(--spacer) / 2);
   background: var(--bg-panel);
   border-bottom: 1px solid var(--border);
   flex-shrink: 0;
@@ -452,7 +459,7 @@ body::after {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 5px 14px;
+  padding: calc(var(--spacer) / 2);
   background: var(--bg-panel);
   border-bottom: 1px solid var(--border);
   flex-shrink: 0;
