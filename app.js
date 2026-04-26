@@ -21,6 +21,15 @@ document.addEventListener('keydown', (e) => {
     .forEach((p) => p.classList.remove('panel--fullscreen'));
 });
 
+// ─── run / stop toggle ────────────────────────────────────────
+
+const runBtn = document.getElementById('run-btn');
+
+runBtn.addEventListener('click', () => {
+  const running = runBtn.classList.toggle('is-running');
+  runBtn.innerHTML = running ? '■&nbsp;STOP' : '▶&nbsp;RUN';
+});
+
 // ─── preset buttons ───────────────────────────────────────────
 
 const presetBtns = document.querySelectorAll('.preset-btn');

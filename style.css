@@ -131,7 +131,7 @@ button {
   padding: calc(var(--spacer) / 4) calc(var(--spacer) / 2);
   background: transparent;
   border: 1px solid transparent;
-  border-radius: 0;
+  border-radius: 2px;
   color: var(--text-dim);
   font-family: var(--font);
   font-size: var(--text-sm);
@@ -351,10 +351,11 @@ button {
   letter-spacing: 0.12em;
   cursor: pointer;
   transition: all 0.1s;
+  min-width: 6.25rem;
 }
 
-.transport-btn.play:hover,
-.transport-btn.play:focus-visible {
+.transport-btn:not(.is-running):hover,
+.transport-btn:not(.is-running):focus-visible {
   color: var(--green);
   border-color: var(--green);
   background: rgba(47, 214, 214, 0.08);
@@ -362,11 +363,17 @@ button {
   outline: none;
 }
 
-.transport-btn.stop:hover,
-.transport-btn.stop:focus-visible {
+.transport-btn.is-running {
+  color: var(--green);
+  border-color: var(--border-mid);
+}
+
+.transport-btn.is-running:hover,
+.transport-btn.is-running:focus-visible {
   color: var(--red);
   border-color: var(--red);
-  background: rgba(248, 81, 73, 0.08);
+  background: rgba(255, 115, 131, 0.08);
+  box-shadow: 0 0 12px rgba(255, 115, 131, 0.12);
   outline: none;
 }
 
@@ -375,12 +382,6 @@ button {
   align-items: center;
   gap: 18px;
   flex-shrink: 0;
-}
-
-.transport-status {
-  font-size: var(--text-xs);
-  letter-spacing: 0.2em;
-  color: var(--green);
 }
 
 .transport-time {
