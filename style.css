@@ -51,6 +51,7 @@
 html, body {
   height: 100%;
   overflow: hidden;
+  overflow-x: scroll;
 }
 
 body {
@@ -62,6 +63,7 @@ body {
   font-family: var(--font);
   font-size: var(--font-sz);
   line-height: 1.5;
+  min-width: 600px;
 }
 
 /* scanlines overlay */
